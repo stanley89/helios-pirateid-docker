@@ -22,7 +22,7 @@ RUN virtualenv venv
 
 RUN bash -c 'source venv/bin/activate; pip install -r requirements.txt'
 
-RUN echo 'local   all             all                                     trust' > /etc/postgresql/9.1/main/pg_hba.conf
+RUN echo 'local   all             all                                     trust' > /etc/postgresql/9.4/main/pg_hba.conf
 
 ADD docker-entrypoint.sh /
 
