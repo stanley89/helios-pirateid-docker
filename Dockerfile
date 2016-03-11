@@ -1,22 +1,16 @@
-FROM debian:latest
-
-EXPOSE 80
+FROM debian:jessie
 
 RUN apt-get update
 
 RUN apt-get install -y python-software-properties software-properties-common
 
-RUN apt-add-repository 'deb http://packages.dotdeb.org wheezy all'
+RUN apt-add-repository 'deb http://packages.dotdeb.org jessie all'
 
-RUN apt-get upgrade -y && apt-get -y install python-virtualenv python-pip postgresql postgresql-client unzip libpq-dev postgresql-server-dev-all python-dev
+RUN apt-get upgrade -y && apt-get -y install python-virtualenv python-pip postgresql postgresql-client libpq-dev postgresql-server-dev-all python-dev git
 
-ADD https://github.com/benadida/helios-server/archive/master.zip /helios/
+RUN git clone https://github.com/pirati-cz/helios-server /helios/
 
 WORKDIR /helios/
-
-RUN unzip master.zip
-
-WORKDIR /helios/helios-server-master/
 
 RUN virtualenv venv
 
@@ -26,13 +20,7 @@ RUN echo 'local   all             all                                     trust'
 
 ADD docker-entrypoint.sh /
 
-ADD pirateid.py /helios/helios-server-master/helios_auth/auth_systems/
-
-ADD pirateid.png /helios/helios-server-master/helios_auth/media/login-icons/
-
-RUN echo 'import pirateid' >> /helios/helios-server-master/helios_auth/auth_systems/__init__.py
-RUN echo "AUTH_SYSTEMS['pirateid'] = pirateid" >> /helios/helios-server-master/helios_auth/auth_systems/__init__.py
-
+ADD pirateid.png /helios/helios_auth/media/login-icons/
 
 RUN echo > /.firstrun 
 
