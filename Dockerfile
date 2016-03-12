@@ -6,9 +6,9 @@ RUN apt-get install -y python-software-properties software-properties-common
 
 RUN apt-add-repository 'deb http://packages.dotdeb.org jessie all'
 
-RUN apt-get upgrade -y && apt-get -y install python-virtualenv python-pip postgresql postgresql-client libpq-dev postgresql-server-dev-all python-dev git
+RUN apt-get upgrade -y && apt-get -y install python-virtualenv python-pip postgresql postgresql-client libpq-dev postgresql-server-dev-all python-dev git rabbitmq-server
 
-RUN git clone https://github.com/pirati-cz/helios-server /helios/
+RUN git clone --recursive https://github.com/stanley89/helios-server /helios/
 
 WORKDIR /helios/
 
